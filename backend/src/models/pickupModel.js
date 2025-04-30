@@ -7,7 +7,8 @@ const PickupSchema = new Schema({
     vendorId : {type : String,require:true,unique:true,populate : "users"},
     address : {type : String,require :true},
     time : {type : String,require:true},
-    status : {type : String,default : "pending"}
+    status : {type : String,default : "pending"},
+    items : {type : Array,default : []}
 })
 
 const PickupModel = model("pickups",PickupSchema)
