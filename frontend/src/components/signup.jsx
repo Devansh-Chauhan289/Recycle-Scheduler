@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 
 
 export const Signup = () => {
@@ -9,6 +10,7 @@ export const Signup = () => {
         email : "",
         password : ""
     })
+    const navigate = useNavigate()
 
     const handlechange = (e) =>{
         const {name,value} = e.target
@@ -16,6 +18,14 @@ export const Signup = () => {
             ...user,
             [name] : value
         })
+    }
+
+    const handleCheck = () => {
+        const token = localStorage.getItem("token");
+        if(token){
+            navigate("/")
+        }
+
     }
 
     const handleSubmit = async(e) => {
@@ -38,6 +48,10 @@ export const Signup = () => {
             address : ""
         })
     }
+
+    useEffect(() => {
+        handleCheck()
+    },[])
 
 
     return(

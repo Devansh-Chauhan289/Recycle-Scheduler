@@ -13,7 +13,7 @@ export const User = () => {
     const [item,setitem] = useState("")
     const [pickup,setpickup] = useState({
         userId : user._id,
-        address : "",
+        address : user.address,
         time : "",
         items : []
     })
@@ -26,6 +26,15 @@ export const User = () => {
 
     }
 
+    const formatdate = (isoDateString) => {
+        const date = new Date(isoDateString);
+        return date.toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        });
+      };
+
     const getPickupList = async() => {
 
         const res = await fetch("http://localhost:5000/pickup/get",{
@@ -37,8 +46,9 @@ export const User = () => {
         })
 
         const data = await res.json()
-        if(data.status === "ok"){
-            console.log(data);
+        if(res.status === 200){
+            
+            setpickups(data.pickups)
         }
     }
 
@@ -76,8 +86,8 @@ export const User = () => {
         })
 
         const  data = await res.json();
-        if(data.status === "ok"){
-            console.log(data);
+        if(res.status === 200){
+            console.log(data.msg);
         }
     }
 
@@ -85,8 +95,7 @@ export const User = () => {
     useEffect(() => {
         getPickupList()
         handleCheck()
-        console.log(user);
-    },[])
+    },[pickups])
 
     return(
         <>
@@ -95,7 +104,26 @@ export const User = () => {
             <div style={{border : "2px solid",width : "25%", height : "auto"}}>
                 <h2>pickup list</h2>
                 <div>
-
+                    {
+                        pickups ? (pickups.map((ele) => {
+            
+                            return(
+                               
+                                    <div key={ele._id}>
+                                        <h3>Pickup Details</h3>
+                                        <h3>{ele.status}</h3>
+                                        {ele.items.map((item,i) => (
+                                            <div key={i} style={{listStyleType : "none"}}>
+                                                <h3>{item}</h3>
+                                            </div>
+                                        ))}
+                                        <h4>Time : {formatdate(ele.time)}</h4>
+                                        
+                                    </div>
+                                
+                            )
+                        })) : ("NO pickups found")
+                    }
                 </div>
             </div>
             <div style={{border : "2px solid", width : "75%", height : "auto"}}>

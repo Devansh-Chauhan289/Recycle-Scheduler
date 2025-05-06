@@ -63,6 +63,7 @@ const Getpickup = async(req,res) => {
                 msg : "No pickups found"
             })
         }
+        return res.status(200).json({msg : "fetch successfully", pickups})
     } catch (error) {
         console.log("error occurred",error);
         return res.status(500).json({
