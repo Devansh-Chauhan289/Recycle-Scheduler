@@ -35,6 +35,8 @@ const Pickup = async(req,res) => {
             items
         })
 
+        const updatedVendor = await UserModel.findByIdAndUpdate(freeVendor._id,{available : false})
+
         await newPickup.save()
         return res.status(201).json({
             msg : "Pickup Created Successfully",

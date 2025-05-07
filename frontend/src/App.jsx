@@ -6,6 +6,7 @@ import { Login } from './components/login'
 import { Signup } from './components/signup'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { User } from './components/userDashboard'
+import { VendorDashboard } from './components/vendorDashboard'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route path='/login' element ={<Login/>} />
           <Route path='/signup' element= {<Signup/>} />
           <Route path='/' element={<User/>} /> 
+          <Route path='/vendor' element={<VendorDashboard/>} />
         </Routes>
       </BrowserRouter>
     </>

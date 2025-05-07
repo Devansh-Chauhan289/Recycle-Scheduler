@@ -12,9 +12,19 @@ export const Login = () => {
 
     const handleCheck = () => {
         const token = localStorage.getItem("token");
-        if(token){
+        const user = () => {
+            const stored = localStorage.getItem("user")
+            return stored ? JSON.parse(stored) : {}
+
+        }
+        const userRole = user()
+        if(token && userRole.role === "user"){
             navigate("/")
         }
+        else if (token && userRole.role === "vendor"){
+            navigate("/vendor")
+        }
+
 
     }
 

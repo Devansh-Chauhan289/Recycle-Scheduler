@@ -23,6 +23,9 @@ export const User = () => {
         if(!token){
             navigate("/login")
         }
+        else if(token && ["/login","/signup"].includes(window.location.pathname)){
+            navigate("/")
+        }
 
     }
 
@@ -86,16 +89,37 @@ export const User = () => {
         })
 
         const  data = await res.json();
+        if(res.status === 201){
+            console.log(data.msg);
+            getPickupList()
+        }
+    }
+
+    const handleDelete = async(id) => {
+        const res = await fetch(`http://localhost:5000/pickup/cancel/${id}`,{
+            method : "DELETE",
+            headers : {
+                "Content-Type" : "application/json",
+                // "Authorization" : `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+
+        const data = await res.json()
         if(res.status === 200){
             console.log(data.msg);
+            getPickupList()
         }
     }
 
 
     useEffect(() => {
         getPickupList()
+        
+    },[])
+
+    useEffect(() => {
         handleCheck()
-    },[pickups])
+    })
 
     return(
         <>
@@ -109,8 +133,8 @@ export const User = () => {
             
                             return(
                                
-                                    <div key={ele._id}>
-                                        <h3>Pickup Details</h3>
+                                    <div key={ele._id} style={{border : "2px solid", margin : "10px", padding : "10px"}}>
+                                        
                                         <h3>{ele.status}</h3>
                                         {ele.items.map((item,i) => (
                                             <div key={i} style={{listStyleType : "none"}}>
@@ -118,7 +142,7 @@ export const User = () => {
                                             </div>
                                         ))}
                                         <h4>Time : {formatdate(ele.time)}</h4>
-                                        
+                                        <button onClick={() => handleDelete(ele._id)}>delete</button>
                                     </div>
                                 
                             )
