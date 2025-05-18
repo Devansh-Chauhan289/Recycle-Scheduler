@@ -46,7 +46,7 @@ export const User = () => {
 
     const getPickupList = async() => {
 
-        const res = await fetch("http://localhost:5000/pickup/get",{
+        const res = await fetch("http://recycle-server-production.up.railway.app/pickup/get",{
             method : "GET",
             headers : {
                 "Content-Type" : "application/json",
