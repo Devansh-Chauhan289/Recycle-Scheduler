@@ -34,7 +34,7 @@ export let Signup = () => {
         setError("");
         
         try {
-            const res = await fetch("http://localhost:5000/user/signup", {
+            const res = await fetch("http://recycle-server-production.up.railway.app/user/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
