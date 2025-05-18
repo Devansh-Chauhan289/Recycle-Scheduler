@@ -78,8 +78,11 @@ const Getpickup = async(req,res) => {
 const UpdatePickup = async(req,res) => {
 
     const {pickupId} = req.params;
-    const {userId,response} = req.body;
+    const {userId,response,available} = req.body;
     try {
+        if(response === "accepted"){
+            await UserModel.findByIdAndUpdate(userId,{available : false})
+        }
         const UpdatePickup = await PickupModel.findByIdAndUpdate(pickupId,{vendorId : userId, status : response})
         if (!UpdatePickup) {
             return res.status(404).json({

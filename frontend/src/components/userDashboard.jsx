@@ -46,7 +46,7 @@ export const User = () => {
 
     const getPickupList = async() => {
 
-        const res = await fetch("http://recycle-server-production.up.railway.app/pickup/get",{
+        const res = await fetch("https://recycle-server-production.up.railway.app/pickup/get",{
             method : "GET",
             headers : {
                 "Content-Type" : "application/json",
@@ -86,7 +86,7 @@ export const User = () => {
         e.preventDefault()
         console.log(user);
         console.log(pickup);
-        const res = await fetch("http://recycle-server-production.up.railway.app/pickup/schedule",{
+        const res = await fetch("https://recycle-server-production.up.railway.app/pickup/schedule",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
@@ -109,7 +109,7 @@ export const User = () => {
     }
 
     const handleDelete = async(id) => {
-        const res = await fetch(`http://recycle-server-production.up.railway.app/pickup/cancel/${id}`,{
+        const res = await fetch(`https://recycle-server-production.up.railway.app/pickup/cancel/${id}`,{
             method : "DELETE",
             headers : {
                 "Content-Type" : "application/json",

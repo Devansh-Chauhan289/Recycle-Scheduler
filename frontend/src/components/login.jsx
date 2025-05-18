@@ -41,7 +41,7 @@ export const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         setloading(true)
-        const res = await fetch("http://recycle-server-production.up.railway.app/user/login",{
+        const res = await fetch("http://localhost:5000/user/login",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -53,8 +53,11 @@ export const Login = () => {
         if(res.status === 200 ){
             localStorage.setItem("token",data.token)
             localStorage.setItem("user",JSON.stringify(data.user))
-            console.log(data.user);
-            console.log(data);
+            if(data.user.role === "user"){
+                navigate("/")
+            } else{
+                navigate("/vendor")
+            }
         }
         setloading(false)
         setuser({

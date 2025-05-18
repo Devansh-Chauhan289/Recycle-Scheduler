@@ -30,7 +30,7 @@ export const VendorDashboard = () => {
 
     const getVendor = async() => {
 
-        const res = await fetch(`http://recycle-server-production.up.railway.app/user/get`,{
+        const res = await fetch(`https://recycle-server-production.up.railway.app/user/get`,{
             method : "GET",
             headers : {
                 "Content-Type" : "application/json",
@@ -46,7 +46,7 @@ export const VendorDashboard = () => {
 
     const getPickupList = async() => {
 
-        const res = await fetch("http://recycle-server-production.up.railway.app/pickup/get",{
+        const res = await fetch("https://recycle-server-production.up.railway.app/pickup/get",{
             method : "GET",
             headers : {
                 "Content-Type" : "application/json",
@@ -63,13 +63,17 @@ export const VendorDashboard = () => {
 
     const ResPickup = async(pickupId,response) => {
         console.log(response);
-        const res = await fetch(`http://recycle-server-production.up.railway.app/pickup/update/${pickupId}`,{
+        const res = await fetch(`https://recycle-server-production.up.railway.app/${pickupId}`,{
             method : "PATCH",
             headers : {
                 "Content-Type" : "application/json",
                 "Authorization" : `Bearer ${localStorage.getItem("token")}`
             },
-            body : JSON.stringify({
+            body : JSON.stringify(response === "accepted" ? {
+                userId : user._id,
+                response : response,
+                available : false
+            } : {
                 userId : user._id,
                 response : response
             })
@@ -78,12 +82,13 @@ export const VendorDashboard = () => {
         const data = await res.json()
         if(res.status === 200){
             getPickupList()
+            getVendor()
         }
     }
 
     const ChangeStatus = async(response) => {
 
-        const res = await fetch("http://recycle-server-production.up.railway.app/user/update",{
+        const res = await fetch("https://recycle-server-production.up.railway.app/user/update",{
             method : "PATCH",
             headers : {
                 "Content-Type" : "application/json",
@@ -161,7 +166,7 @@ export const VendorDashboard = () => {
                                                 <option value="accepted">Accepted</option>
                                             </select>
                                         )}
-                                        <button onClick={() => ResPickup(pickup._id,"completed")} style={pickup.status === "accepted" ? {display : "block" } : {display : "none"}}>Completed</button>
+                                        <button className="border-none hover:bg-[#00674b] rounded-xl p-3 text-lg font-semibold bg-[#9ACD32]  cursor-pointer  " onClick={() => ResPickup(pickup._id,"completed")} style={pickup.status === "accepted" ? {display : "block" } : {display : "none"}}>Completed</button>
                                         
                                     </div>
                                 )
