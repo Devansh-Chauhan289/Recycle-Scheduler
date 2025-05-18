@@ -41,7 +41,7 @@ export const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         setloading(true)
-        const res = await fetch("http://localhost:5000/user/login",{
+        const res = await fetch("https://recycle-server-production.up.railway.app/user/login",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
