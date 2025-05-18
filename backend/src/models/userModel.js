@@ -8,7 +8,8 @@ const UserSchema = new Schema({
     address : {type : String,require:true}, 
     password : {type : String,require:true},
     token : {type : String},
-    available : {type : Boolean, default : false}
+    available : {type : Boolean, default : false},
+    phone : {type : String,require:true},
 })
 
 const UserModel = model("users",UserSchema)

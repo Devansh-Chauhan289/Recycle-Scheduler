@@ -32,7 +32,8 @@ const Pickup = async(req,res) => {
             vendorId : freeVendor._id,
             time,
             address,
-            items
+            items,
+            status : "accepted"
         })
 
         const updatedVendor = await UserModel.findByIdAndUpdate(freeVendor._id,{available : false})

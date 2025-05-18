@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
+import { Input,Button } from "./input"
 
 
 export const Login = () => {
@@ -9,6 +10,7 @@ export const Login = () => {
         password : ""
     })
     const navigate = useNavigate()
+    const [loading,setloading] = useState(false)
 
     const handleCheck = () => {
         const token = localStorage.getItem("token");
@@ -38,7 +40,7 @@ export const Login = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        
+        setloading(true)
         const res = await fetch("http://localhost:5000/user/login",{
             method : "POST",
             headers : {
@@ -54,7 +56,7 @@ export const Login = () => {
             console.log(data.user);
             console.log(data);
         }
-        
+        setloading(false)
         setuser({
             email : "",
             password : ""
@@ -68,12 +70,26 @@ export const Login = () => {
 
 
     return(
-        <>
-        <form onSubmit={handleSubmit}>
-            <input type="email" name="email" value={user.email} onChange={(e) => handlechange(e)} placeholder="Enter your Email" />
-            <input type="password" name="password" value={user.password} onChange={(e) =>  handlechange(e)} placeholder="Enter Your Password" />
-            <button type="submit">Submit</button>
-        </form>
-        </>
-    )
+            <>
+            
+            <div className=" w-full h-screen">
+            <div className="m-[auto] rounded-xl mt-[10%] p-[3px] bg-gradient-to-r from-[#662d91] to-[#F9629F] w-[40%]">
+                <form onSubmit={handleSubmit} className="rounded-xl bg-white  w-full h-[auto] flex flex-col justify-space-around gap-10 px-10 py-10">
+                    <h1 className="text-[#1d1160] font-serif text-[300%] text-center font-bold">
+                    Already with us..? then Sign In </h1>
+
+                    <Input placeholder="Enter your Email" name="email"className="text" value={user.email} onchange={handlechange} type="email" />
+
+                    <Input
+                     placeholder="Enter your Password" 
+                     name="password" 
+                     className="text" 
+                     value={user.password} onchange={handlechange} type="password" />
+                    <Button type="Submit" loading = {loading} label={loading ? "Signing In..": "Sign In"} />
+                    <h1>Don't Have a account..? <b onClick={()=> navigate("/signup")} className="text-[#191970] hover:underline cursor-pointer">SIGN UP</b></h1>
+                </form>
+            </div>
+        </div>
+            </>
+        )
 }

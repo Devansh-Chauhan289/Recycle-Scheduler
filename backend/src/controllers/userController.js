@@ -98,7 +98,45 @@ const UserLogin = async(req,res) => {
 }
 
 
+const UpdateVendor = async(req,res) => {
+
+   
+    const {id,available} = req.body;
+
+    try {
+        await UserModel.findByIdAndUpdate(id,{available : available})
+        return res.status(200).json({
+            msg : "Vendor Status Updated Successfully"
+        })
+    } catch (error) {
+        console.log("error occurred",error);
+        return res.status(500).json({
+            msg : "Internal Server Error"
+        })
+    }
+}
+
+const Getvendor = async(req,res) => {
+
+
+    try {
+        const vendors = await UserModel.find({role : "vendor"})
+        res.status(200).json({
+            msg : "Vendors fetched successfully",
+            vendors : vendors
+        })    
+    } catch (error) {
+        console.log("error occurred",error);
+        return res.status(500).json({
+            msg : "Internal Server Error"
+        })
+    }
+}
+
+
 export{
     UserLogin,
-    UserSignup
+    UserSignup,
+    UpdateVendor,
+    Getvendor
 }
