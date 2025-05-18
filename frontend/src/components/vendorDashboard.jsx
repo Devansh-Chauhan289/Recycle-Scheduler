@@ -30,7 +30,7 @@ export const VendorDashboard = () => {
 
     const getVendor = async() => {
 
-        const res = await fetch(`http://localhost:5000/user/get`,{
+        const res = await fetch(`http://recycle-server-production.up.railway.app/user/get`,{
             method : "GET",
             headers : {
                 "Content-Type" : "application/json",
@@ -46,7 +46,7 @@ export const VendorDashboard = () => {
 
     const getPickupList = async() => {
 
-        const res = await fetch("http://localhost:5000/pickup/get",{
+        const res = await fetch("http://recycle-server-production.up.railway.app/pickup/get",{
             method : "GET",
             headers : {
                 "Content-Type" : "application/json",
@@ -63,7 +63,7 @@ export const VendorDashboard = () => {
 
     const ResPickup = async(pickupId,response) => {
         console.log(response);
-        const res = await fetch(`http://localhost:5000/pickup/update/${pickupId}`,{
+        const res = await fetch(`http://recycle-server-production.up.railway.app/pickup/update/${pickupId}`,{
             method : "PATCH",
             headers : {
                 "Content-Type" : "application/json",
@@ -83,7 +83,7 @@ export const VendorDashboard = () => {
 
     const ChangeStatus = async(response) => {
 
-        const res = await fetch("http://localhost:5000/user/update",{
+        const res = await fetch("http://recycle-server-production.up.railway.app/user/update",{
             method : "PATCH",
             headers : {
                 "Content-Type" : "application/json",
